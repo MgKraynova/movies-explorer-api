@@ -43,7 +43,7 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
   },
   movieId: {
-    required: true, //todo изучить, в каком формате приходит
+    required: true, // todo изучить, в каком формате приходит
     type: Number,
   },
   nameRU: {

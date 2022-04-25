@@ -25,13 +25,19 @@
   },
   "homepage": "https://github.com/MgKraynova/movies-explorer-api#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "celebrate": "^15.0.1",
+    "eslint": "^8.14.0",
     "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.15"
   }
 }
