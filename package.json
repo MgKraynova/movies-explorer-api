@@ -26,7 +26,8 @@
   "homepage": "https://github.com/MgKraynova/movies-explorer-api#readme",
   "dependencies": {
     "express": "^4.17.3",
-    "mongoose": "^6.3.1"
+    "mongoose": "^6.3.1",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
