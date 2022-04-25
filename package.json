@@ -1,0 +1,20 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MgKraynova/movies-explorer-api.git"
+  },
+  "keywords": ["node.js", "express.js", "MongoDB"],
+  "author": "Kraynova Marina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MgKraynova/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/MgKraynova/movies-explorer-api#readme"
+}
