@@ -2,10 +2,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const NotFoundError = require('../errors/NotFoundError');
 const CastError = require('../errors/CastError');
 const ValidationError = require('../errors/ValidationError');
 const ConflictingRequest = require('../errors/ConflictingRequest');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 module.exports.getUserInfo = (req, res, next) => {
   User.findOne({ _id: req.user._id })
@@ -23,7 +26,7 @@ module.exports.getUserInfo = (req, res, next) => {
         next(err);
       }
     });
-}
+};
 
 module.exports.updateUserInfo = (req, res, next) => {
   const { name, email } = req.body;
@@ -34,7 +37,7 @@ module.exports.updateUserInfo = (req, res, next) => {
   )
     .then((user) => {
       if (user) {
-        res.send( user );
+        res.send(user);
       } else {
         next(new NotFoundError('Ошибка. Пользователь не найден, попробуйте еще раз'));
       }
@@ -81,3 +84,20 @@ module.exports.createUser = (req, res, next) => {
       next(err);
     });
 };
+
+module.exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res.send({ token });
+    })
+    .catch(() => {
+      next(new UnauthorizedError('Почта или пароль введены неправильно'));
+    });
+}; // todo от 33 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY2Y2JmOWU2YTAxNDMzNWZkNzllNzYiLCJpYXQiOjE2NTA5MDYxOTQsImV4cCI6MTY1MTUxMDk5NH0.O3laI3ylurBgPHc95YTAsB7SFkYJC1wkwCARq4A9eLI"

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { celebrate, Joi } = require('celebrate');
 
 const auth = require('./middlewares/auth');
-const { createUser } = require('./controllers/users');
+const { createUser, login } = require('./controllers/users');
 const routerUsers = require('./routes/users');
 
 const app = express();
@@ -21,6 +21,13 @@ app.listen(PORT, () => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
+}), login);
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({

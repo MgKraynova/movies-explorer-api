@@ -49,12 +49,12 @@ const movieSchema = new mongoose.Schema({
   nameRU: {
     type: String,
     required: true,
-    pattern: "/[\\Wа-яА-ЯёЁ0-9\\s\\-?]+/g",
+    pattern: '/[\\Wа-яА-ЯёЁ0-9\\s\\-?]+/g',
   },
   nameEN: {
     type: String,
     required: true,
-    pattern: "/[\\w\\d\\s\\-?]+/gi",
+    pattern: '/[\\w\\d\\s\\-?]+/gi',
   },
 }, { versionKey: false });
 
