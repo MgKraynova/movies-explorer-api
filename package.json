@@ -4,17 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MgKraynova/movies-explorer-api.git"
   },
-  "keywords": ["node.js", "express.js", "MongoDB"],
+  "keywords": [
+    "node.js",
+    "express.js",
+    "MongoDB"
+  ],
   "author": "Kraynova Marina",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MgKraynova/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/MgKraynova/movies-explorer-api#readme"
+  "homepage": "https://github.com/MgKraynova/movies-explorer-api#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
