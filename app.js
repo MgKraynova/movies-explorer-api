@@ -4,11 +4,12 @@ const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 const cors = require('cors');
 
-
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
 const routerUsers = require('./routes/users');
 const routerMovies = require('./routes/movies');
+
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use(cors({
   origin: 'https://mesto-app.nomoredomains.xyz', // todo добавить актуальный адрес
   credentials: true,
 }));
+
+app.use(requestLogger);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,6 +53,8 @@ app.use(auth);
 app.use('/users', routerUsers);
 
 app.use('/movies', routerMovies);
+
+app.use(errorLogger);
 
 app.use(errors());
 
