@@ -24,6 +24,10 @@ routerMovies.post('/', celebrate({
 
 routerMovies.get('/', getAllSavedMovies);
 
-routerMovies.delete('/:_id', deleteFilm);
+routerMovies.delete('/:_id', celebrate({
+  params: Joi.object().keys({
+    _id: Joi.string().alphanum(),
+  }),
+}), deleteFilm);
 
 module.exports = routerMovies;
