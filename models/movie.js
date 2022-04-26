@@ -25,7 +25,7 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    validate: [validator.isURL, 'invalid URL in image'],
+    pattern: '/\\/?[0-9а-яa-zё]{1,}\\.[а-яa-zё]{2}[a-zа-яё\\-._~:/?#[\\]@!$&\'()*+,;=]*#?/i',
   },
   trailerLink: {
     type: String,
@@ -35,7 +35,7 @@ const movieSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
     required: true,
-    validate: [validator.isURL, 'invalid URL in thumbnail'],
+    pattern: '/\\/?[0-9а-яa-zё]{1,}\\.[а-яa-zё]{2}[a-zа-яё\\-._~:/?#[\\]@!$&\'()*+,;=]*#?/i',
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

@@ -6,6 +6,7 @@ const { celebrate, Joi } = require('celebrate');
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
 const routerUsers = require('./routes/users');
+const routerMovies = require('./routes/movies');
 
 const app = express();
 
@@ -40,3 +41,5 @@ app.post('/signup', celebrate({
 app.use(auth);
 
 app.use('/users', routerUsers);
+
+app.use('/movies', routerMovies);
