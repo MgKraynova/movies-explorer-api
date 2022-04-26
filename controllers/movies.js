@@ -1,6 +1,9 @@
 const Movie = require('../models/movie');
 const ValidationError = require('../errors/ValidationError');
 const ConflictingRequest = require('../errors/ConflictingRequest');
+const NotFoundError = require('../errors/NotFoundError');
+const CastError = require('../errors/CastError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.addMovieToDataBase = (req, res, next) => {
   const {
@@ -60,3 +63,33 @@ module.exports.getAllSavedMovies = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.deleteFilm = (req, res, next) => {
+  Movie.findById(req.params._id)
+    .then((movie) => {
+      if (movie) {
+        const movieOwner = movie.owner.toString().replace('new ObjectId("', '');
+        if (req.user._id === movieOwner) {
+          Movie.findByIdAndRemove(req.params._id)
+            .then((result) => {
+              res.send(result);
+            })
+            .catch((err) => {
+              if (err.name === 'CastError') {
+                next(new CastError('Ошибка. Введен некорректный id карточки'));
+              } else {
+                next(err);
+              }
+            });
+        } else {
+          next(new ForbiddenError('Отстутствуют права на удаление фильма'));
+        }
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        next(new NotFoundError('Ошибка. Фильм не найден в базе данных сохраненных фильмов'));
+      } else {
+        next(err);
+      }
+    });
+};
