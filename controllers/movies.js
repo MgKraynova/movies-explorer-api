@@ -58,9 +58,13 @@ module.exports.addMovieToDataBase = (req, res, next) => {
 };
 
 module.exports.getAllSavedMovies = (req, res, next) => {
-  Movie.find({}).sort({ createdAt: -1 })
-    .then((result) => res.send(result))
-    .catch(next);
+  Movie.find({ owner: req.user._id }).sort({ createdAt: -1 })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      next(err);
+    });
 };
 
 module.exports.deleteFilm = (req, res, next) => {

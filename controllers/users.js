@@ -100,4 +100,4 @@ module.exports.login = (req, res, next) => {
     .catch(() => {
       next(new UnauthorizedError('Почта или пароль введены неправильно'));
     });
-}; // todo от 33 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY2Y2JmOWU2YTAxNDMzNWZkNzllNzYiLCJpYXQiOjE2NTA5MDYxOTQsImV4cCI6MTY1MTUxMDk5NH0.O3laI3ylurBgPHc95YTAsB7SFkYJC1wkwCARq4A9eLI"
+};

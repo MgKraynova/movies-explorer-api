@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     select: false,
-  }, // todo убедиться, что хранится хеш пароля
+  },
   name: {
     type: String,
     required: true,
