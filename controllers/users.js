@@ -1,14 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-
-const { NODE_ENV, JWT_SECRET } = process.env;
-
 const NotFoundError = require('../errors/NotFoundError');
 const CastError = require('../errors/CastError');
 const ValidationError = require('../errors/ValidationError');
 const ConflictingRequest = require('../errors/ConflictingRequest');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUserInfo = (req, res, next) => {
   User.findOne({ _id: req.user._id })

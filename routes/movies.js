@@ -1,6 +1,5 @@
 const routerMovies = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-
 const { addMovieToDataBase, getAllSavedMovies, deleteFilm } = require('../controllers/movies');
 
 routerMovies.post('/', celebrate({

@@ -8,14 +8,15 @@ const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
 const routerUsers = require('./routes/users');
 const routerMovies = require('./routes/movies');
-
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const { NODE_ENV, DATA_BASE } = process.env;
 
 const app = express();
 
 const { PORT = 3000 } = process.env;
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(NODE_ENV === 'production' ? DATA_BASE : 'mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
 
