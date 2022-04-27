@@ -24,7 +24,7 @@ app.listen(PORT, () => {
 });
 
 app.use(cors({
-  origin: 'https://mesto-app.nomoredomains.xyz', // todo добавить актуальный адрес
+  origin: 'https://movies-app.nomoredomains.work',
   credentials: true,
 }));
 
