@@ -33,14 +33,14 @@ app.use(requestLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/signin', celebrate({
+app.post('/api/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 }), login);
 
-app.post('/signup', celebrate({
+app.post('/api/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     email: Joi.string().email().required(),
@@ -50,9 +50,9 @@ app.post('/signup', celebrate({
 
 app.use(auth);
 
-app.use('/users', routerUsers);
+app.use('/api/users', routerUsers);
 
-app.use('/movies', routerMovies);
+app.use('/api/movies', routerMovies);
 
 app.use(errorLogger);
 
