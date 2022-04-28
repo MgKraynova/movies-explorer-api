@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
@@ -31,6 +32,15 @@ app.use(cors({
   origin: 'https://movies-app.nomoredomains.work',
   credentials: true,
 }));
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(limiter);
 
 app.use(requestLogger);
 
