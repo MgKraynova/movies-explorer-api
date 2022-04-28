@@ -40,7 +40,11 @@ module.exports.addMovieToDataBase = (req, res, next) => {
           .then(() => {
             Movie.findOne({ movieId })
               .then((movie) => {
-                res.send(movie);
+                if (movie) {
+                  res.send(movie);
+                } else {
+                  next(new NotFoundError('Ошибка. Фильм не найден в базе данных сохраненных фильмов'));
+                }
               })
               .catch((err) => {
                 if (err.name === 'ValidationError') {
@@ -54,6 +58,9 @@ module.exports.addMovieToDataBase = (req, res, next) => {
       } else {
         next(new ConflictingRequest('Ошибка. Фильм уже сохранен пользователем'));
       }
+    })
+    .catch((err) => {
+      next(err);
     });
 };
 
