@@ -31,6 +31,8 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use(requestLogger);
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -39,8 +41,6 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-
-app.use(requestLogger);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
