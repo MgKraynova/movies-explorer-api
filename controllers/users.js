@@ -86,6 +86,9 @@ module.exports.createUser = (req, res, next) => {
                   next(err);
                 }
               });
+          })
+          .catch((err) => {
+            next(err);
           });
       } else {
         next(new ConflictingRequest('Ошибка. Пользователь c таким email уже зарегистрирован'));
