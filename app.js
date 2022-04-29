@@ -2,15 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { celebrate, Joi, errors } = require('celebrate');
+const { errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
-const auth = require('./middlewares/auth');
-const { createUser, login } = require('./controllers/users');
-const routerUsers = require('./routes/users');
-const routerMovies = require('./routes/movies');
+const routerApp = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { NODE_ENV, DATA_BASE } = process.env;
@@ -48,26 +45,7 @@ app.use(requestLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/api/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  }),
-}), login);
-
-app.post('/api/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  }),
-}), createUser);
-
-app.use(auth);
-
-app.use('/api/users', routerUsers);
-
-app.use('/api/movies', routerMovies);
+app.use(routerApp);
 
 app.use(errorLogger);
 
