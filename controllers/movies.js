@@ -94,6 +94,8 @@ module.exports.deleteFilm = (req, res, next) => {
         } else {
           next(new ForbiddenError('Отстутствуют права на удаление фильма'));
         }
+      } else {
+        next(new NotFoundError('Ошибка. Фильм не найден в базе данных сохраненных фильмов'));
       }
     })
     .catch((err) => {
