@@ -1,5 +1,6 @@
 const routerMovies = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 const { addMovieToDataBase, getAllSavedMovies, deleteFilm } = require('../controllers/movies');
 
 routerMovies.post('/', celebrate({
@@ -9,10 +10,14 @@ routerMovies.post('/', celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required()
-      .regex(/\/?[0-9а-яa-zё]{1,}\.[а-яa-zё]{2}[a-zа-яё\-._~:/?#[\]@!$&'()*+,;=]*#?/i),
+    image: Joi.string().required().regex(/\/?[0-9а-яa-zё]{1,}\.[а-яa-zё]{2}[a-zа-яё\-._~:/?#[\]@!$&'()*+,;=]*#?/i),
     trailerLink: Joi.string().required()
-      .regex(/https?:\/\/(www)?(\.)?[0-9а-яa-zё]{1,}\.[а-яa-zё]{2}[a-zа-яё\-._~:/?#[\]@!$&'()*+,;=]*#?/i),
+      .custom((value, helpers) => {
+        if (validator.isURL(value)) {
+          return value;
+        }
+        return helpers.message('Поле trailerLink заполнено неккорректно');
+      }),
     thumbnail: Joi.string().required()
       .regex(/\/?[0-9а-яa-zё]{1,}\.[а-яa-zё]{2}[a-zа-яё\-._~:/?#[\]@!$&'()*+,;=]*#?/i),
     movieId: Joi.required(),
