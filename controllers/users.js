@@ -7,6 +7,7 @@ const CastError = require('../errors/CastError');
 const ValidationError = require('../errors/ValidationError');
 const ConflictingRequest = require('../errors/ConflictingRequest');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const { secretKeyForDev } = require('../utils/config');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -106,7 +107,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : secretKeyForDev,
         { expiresIn: '7d' },
       );
       res.send({ token });

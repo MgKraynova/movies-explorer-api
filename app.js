@@ -5,10 +5,10 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 
 const routerApp = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter, mongoDataBaseAddress } = require('./utils/config');
 
 const { NODE_ENV, DATA_BASE } = process.env;
 
@@ -16,7 +16,7 @@ const app = express();
 
 const { PORT = 3000 } = process.env;
 
-mongoose.connect(NODE_ENV === 'production' ? DATA_BASE : 'mongodb://localhost:27017/moviesdb', {
+mongoose.connect(NODE_ENV === 'production' ? DATA_BASE : mongoDataBaseAddress, {
   useNewUrlParser: true,
 });
 
@@ -32,13 +32,6 @@ app.use(cors({
 }));
 
 app.use(requestLogger);
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
 
 app.use(limiter);
 
