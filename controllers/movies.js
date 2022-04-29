@@ -80,27 +80,20 @@ module.exports.deleteFilm = (req, res, next) => {
       if (movie) {
         const movieOwner = movie.owner.toString().replace('new ObjectId("', '');
         if (req.user._id === movieOwner) {
-          Movie.findByIdAndRemove(req.params._id)
+          return Movie.findByIdAndRemove(req.params._id)
             .then((result) => {
               res.send(result);
-            })
-            .catch((err) => {
-              if (err.name === 'CastError') {
-                next(new CastError('Ошибка. Введен некорректный id карточки'));
-              } else {
-                next(err);
-              }
             });
-        } else {
-          next(new ForbiddenError('Отстутствуют права на удаление фильма'));
         }
-      } else {
-        next(new NotFoundError('Ошибка. Фильм не найден в базе данных сохраненных фильмов'));
+        return next(new ForbiddenError('Отстутствуют права на удаление фильма'));
       }
+      return next(new NotFoundError('Ошибка. Фильм не найден в базе данных сохраненных фильмов'));
     })
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFoundError('Ошибка. Фильм не найден в базе данных сохраненных фильмов'));
+      } else if (err.name === 'CastError') {
+        next(new CastError('Ошибка. Введен некорректный id фильма'));
       } else {
         next(err);
       }
