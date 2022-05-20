@@ -27,7 +27,8 @@ app.listen(PORT, () => {
 app.use(helmet());
 
 app.use(cors({
-  origin: 'https://movies-app.nomoredomains.work',
+  // origin: 'https://movies-app.nomoredomains.work',
+  origin: true,
   credentials: true,
 }));
 
