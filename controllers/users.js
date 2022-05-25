@@ -34,7 +34,7 @@ module.exports.updateUserInfo = (req, res, next) => {
 
   User.find({ email })
     .then((result) => {
-      if (result.length === 0) {
+      if (result.length === 0 || (result.length === 1 && result[0].email === email)) {
         User.findByIdAndUpdate(
           req.user._id,
           { name, email },
